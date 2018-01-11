@@ -1,0 +1,48 @@
+Filter Records
+
+Inequalities:
+  SQL: SELECT * FROM posts WHERE name != condition
+  Ruby: Post.all.not(name: "condition")
+
+Pattern Matching
+  SQL:
+  Ruby:
+
+Ranges
+  SQL: SELECT * FROM posts WHERE (post.id IN (1,10))
+  Ruby: Post.find([1,10])
+
+Boolean logic
+  SQL: SELECT * FROM post WHERE user = true
+  Ruby: Post.where(:user => true)
+
+Sort in particular order
+  SQL: SELECT * FROM post ORDER BY date
+  Ruby: Post.order("date")
+
+Limit number of records returned
+  SQL: SELECT * FROM posts LIMIT 5
+  Ruby: Post.limit(5)
+
+Group records into sections
+  SQL: SELECT date(created_at) as ordered_date, sum(price) as total_price FROM orders GROUP BY date(created_at)
+  Ruby: Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+
+Perform calculations using aggregate functions
+  SQL: SELECT MAX(post) FROM post
+  Ruby: Post.maximum("id")
+
+Cross Join
+  SQL: SELECT * FROM table1 CROSS JOIN table2
+  Ruby:
+
+Inner Join
+  SQL: SELECT categories.* FROM categories
+       INNER JOIN posts ON posts.category_id = categories.id
+  Ruby: Category.joins(:posts)
+
+Outer Join
+  SQL: SELECT count(DISTINCT clients.id) AS count_all FROM clients
+        LEFT OUTER JOIN orders ON orders.client_id = client.id WHERE
+        (clients.first_name = 'Ryan' AND orders.status = 'received')
+  Ruby: Client.includes("orders").where(:first_name => 'Ryan', :orders => {:status => 'received'}).count
