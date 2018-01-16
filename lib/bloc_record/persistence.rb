@@ -1,5 +1,5 @@
 require 'sqlite3'
-require '../bloc_record/schema'
+require 'bloc_record/schema'
 
 module Persistence
 
@@ -30,16 +30,29 @@ module Persistence
     true
   end
 
+  def find_by(attribute, value)
+    row = connection.get_first_row <<-SQL
+      SELECT #{columns.join ","} FROM #{table}
+      WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
+    SQL
+
+    data = Hash[columns.zip(row)]
+    new(data)
+
+  end
+
   module ClassMethods
     def create(attrs)
        attrs = BlocRecord::Utility.convert_keys(attrs)
        attrs.delete "id"
        vals = attributes.map { |key| BlocRecord::Utility.sql_strings(attrs[key]) }
 
-       connection.execute <<-SQL
-         INSERT INTO #{table} ()
-         VALUES ();
-       SQL
+      sql = <<-SQL
+        INSERT INTO #{table} (#{attributes.join ","})
+        VALUES (#{vals.join ","});
+      SQL
+
+      connection.execute sql
 
        data = Hash[attributes.zip attrs.values]
        data["id"] = connection.execute("SELECT last_insert_rowid();")[0][0]

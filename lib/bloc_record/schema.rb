@@ -1,5 +1,5 @@
 require 'sqlite3'
-require '../bloc_record/utility'
+require 'bloc_record/utility'
 
 module Schema
 
@@ -27,7 +27,7 @@ module Schema
 
   def count
     connection.execute(<<-SQL)[0][0]
-      SELECT COUNT (*) FROM
+      SELECT COUNT (*) FROM #{table}
     SQL
   end
 
