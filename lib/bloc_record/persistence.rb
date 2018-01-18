@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'bloc_record/schema'
+require 'bloc_record/connection'
 
 module Persistence
 
@@ -30,17 +31,6 @@ module Persistence
     true
   end
 
-  def find_by(attribute, value)
-    row = connection.get_first_row <<-SQL
-      SELECT #{columns.join ","} FROM #{table}
-      WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
-    SQL
-
-    data = Hash[columns.zip(row)]
-    new(data)
-
-  end
-
   module ClassMethods
     def create(attrs)
        attrs = BlocRecord::Utility.convert_keys(attrs)
@@ -59,5 +49,4 @@ module Persistence
        new(data)
      end
    end
-
 end
