@@ -12,7 +12,6 @@ module Persistence
   end
 
   def save!
-
     unless self.id
       self.id = self.class.create(BlocRecord::Utility.instance_variables_to_hash(self)).id
       BlocRecord::Utility.reload_obj(self)
@@ -28,17 +27,6 @@ module Persistence
     SQL
 
     true
-  end
-
-  def find_by(attribute, value)
-    row = connection.get_first_row <<-SQL
-      SELECT #{columns.join ","} FROM #{table}
-      WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
-    SQL
-
-    data = Hash[columns.zip(row)]
-    new(data)
-
   end
 
   module ClassMethods
@@ -57,7 +45,6 @@ module Persistence
        data = Hash[attributes.zip attrs.values]
        data["id"] = connection.execute("SELECT last_insert_rowid();")[0][0]
        new(data)
-     end
-   end
-
+    end
+  end
 end
