@@ -46,11 +46,6 @@ module Persistence
        data = Hash[attributes.zip attrs.values]
        data["id"] = connection.execute("SELECT last_insert_rowid();")[0][0]
        new(data)
-<<<<<<< HEAD
     end
   end
-=======
-     end
-   end
->>>>>>> Assign3
 end
