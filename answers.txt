@@ -1,0 +1,38 @@
+1)
+
+  The RubyGems software allows you to easily download, install, and use ruby
+software packages on your system. The software package is called a “gem” which
+contains a packaged Ruby application or library. I would use a gems because it
+can be used to extend or modify functionality in Ruby applications.
+Commonly they’re used to distribute reusable functionality that is shared with
+other Rubyists for use in their applications and libraries.
+Some gems provide command line utilities to help automate tasks and speed up your work
+
+2)
+  Lazy loading is a type of design pattern, which means an object isn't
+  calculated until the first time it is needed. Eager loading initializes an
+  object upon creation.
+
+3)
+  CREATE TABLE will do exactly that create the table. INSERT INTO tablename will
+  insert values into 'tablename'
+
+4)
+   Use include for instance methods and extend for class methods.
+   Also, it is sometimes ok to use include to add both instance and class methods.
+
+5)
+  Save should be a instance method because it is an save is an instance on the
+  class. Meaning your not creating something from the class but your saving a single
+  occurrence of the class. Not creating a class
+
+6)
+  UPDATE table_name
+  SET name = "new_name"
+  WHERE name = "old_name";
+
+7)
+  def camel_case
+    return self if self !~ /_/ && self =~ /[A-Z]+.*/
+    split('_').map{|e| e.capitalize}.join
+  end
