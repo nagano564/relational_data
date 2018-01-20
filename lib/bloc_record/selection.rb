@@ -13,6 +13,19 @@ module Selection
   #     end
   # end
   
+  def validate_if_postive(id)
+    if id <= 0
+      puts "Please enter a valid ID"
+    else
+      # find(*ids)
+      find_one(id)
+    end
+  end
+  
+  def validate_if_string(value)
+    if 
+  end
+  
   def find(*ids)
     if ids.length == 1
       find_one(ids.first)
@@ -27,6 +40,7 @@ module Selection
   end
   
   def find_one(id)
+    
     row = connection.get_first_row <<-SQL
       SELECT #{columns.join ","} FROM #{table}
       WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
