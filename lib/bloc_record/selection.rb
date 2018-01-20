@@ -1,29 +1,17 @@
 require 'sqlite3'
 
 module Selection
-<<<<<<< HEAD
-  # def find(id)
-  #   row = connection.get_first_row <<-SQL
-  #     SELECT #{columns.join ","} FROM #{table}
-  #     WHERE id = #{id};
-  #   SQL
-  # 
-  #   data = Hash[columns.zip(row)]
-  #   new(data)
+  
+  # def validation(input)
+  #   if input id not in db 
+  #     puts "Id not in address book"
+  #     call method again
+  #   else
+  #     if number is a string
+  #       puts "Invalid input type"
+  #       call method again
+  #     end
   # end
-  
-  def find_by(attribute, value)
-=======
-  
-  def validation(input)
-    if input id not in db 
-      puts "Id not in address book"
-      call method again
-    else
-      if number is a string
-        puts "Invalid input type"
-        call method again
-  end
   
   def find(*ids)
     if ids.length == 1
@@ -39,7 +27,6 @@ module Selection
   end
   
   def find_one(id)
->>>>>>> Assign3
     row = connection.get_first_row <<-SQL
       SELECT #{columns.join ","} FROM #{table}
       WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
