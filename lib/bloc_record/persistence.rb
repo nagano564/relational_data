@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'bloc_record/schema'
+require 'bloc_record/connection'
 
 module Persistence
 
@@ -45,6 +46,11 @@ module Persistence
        data = Hash[attributes.zip attrs.values]
        data["id"] = connection.execute("SELECT last_insert_rowid();")[0][0]
        new(data)
+<<<<<<< HEAD
     end
   end
+=======
+     end
+   end
+>>>>>>> Assign3
 end
