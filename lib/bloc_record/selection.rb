@@ -164,18 +164,33 @@ module Selection
   end
 
   def order(*args)
-    if args.count > 1
-      order = args.join(",")
-    else
-      order = args.first.to_s
-    end
+    all_args=[]
+    if args.length>0
+      args.each do |arg|
+        case arg
+        when Symbol #a symbol only
+          all_args << arg.to_s + " ASC"
+        when Hash # a hash
+          arg.each{|k,v| all_args << "#{k} #{v}"}
+        when String # a string
+          all_args << arg
+        end
+      end
+      order = all_args.join(', ')
 
-    rows = connection.execute <<-SQL
-      SELECT * FROM #{table}
-      ORDER BY #{order};
-    SQL
+      rows = connection.execute <<-SQL
+        SELECT * FROM #{table}
+        ORDER BY #{order};
+      SQL
+    else
+       # there are no parameters
+       rows = connection.execute <<-SQL
+         SELECT * FROM #{table};
+       SQL
+    end
     rows_to_array(rows)
   end
+
 
   def join(*args)
     if args.count > 1

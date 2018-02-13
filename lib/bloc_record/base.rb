@@ -19,6 +19,5 @@ module BlocRecord
         self.instance_variable_set("@#{col}", options[col])
       end
     end
-
   end
 end
