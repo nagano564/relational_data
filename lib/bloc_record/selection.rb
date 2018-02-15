@@ -168,11 +168,11 @@ module Selection
     if args.length>0
       args.each do |arg|
         case arg
-        when Symbol #a symbol only
-          all_args << arg.to_s + " ASC"
-        when Hash # a hash
+        when Symbol
+          all_args << arg.to_s
+        when Hash
           arg.each{|k,v| all_args << "#{k} #{v}"}
-        when String # a string
+        when String
           all_args << arg
         end
       end
@@ -183,7 +183,6 @@ module Selection
         ORDER BY #{order};
       SQL
     else
-       # there are no parameters
        rows = connection.execute <<-SQL
          SELECT * FROM #{table};
        SQL
