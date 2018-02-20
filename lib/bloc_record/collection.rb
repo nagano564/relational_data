@@ -36,35 +36,34 @@ module BlocRecord
 
       rows = connection.execute(sql, params)
       rows_to_array(rows)
-
-      def not
-        if args.count > 1
-          expression = args.shift
-          params = args
-        else
-          case args.first
-          when String
-            expression = args.first
-          when Hash
-            if args.first.keys[0] == nil
-              expression_hash = BlocRecord::Utility.convert_keys(args.first)
-              expression = expression_hash.map { |key, value| "#{key} IS NOT NULL" }
-            else
-              expression_hash = BlocRecord::Utility.convert_keys(args.first)
-              expression = expression_hash.map { |key, value| "#{key} = #{BlocRecord::Utility.sql_strings(value)}"}.join("<>")
-            end
-          end
-
-          sql = <<-SQL
-            SELECT #{columns.join ","} FROM #{table}
-            WHERE #{expression};
-          SQL
-
-          rows = connection.execute(sql, params)
-          rows_to_array(rows)
-        end
-      end
     end
 
+    def not
+      if args.count > 1
+        expression = args.shift
+        params = args
+      else
+        case args.first
+        when String
+          expression = args.first
+        when Hash
+          if args.first.keys[0] == nil
+            expression_hash = BlocRecord::Utility.convert_keys(args.first)
+            expression = expression_hash.map { |key, value| "#{key} IS NOT NULL" }
+          else
+            expression_hash = BlocRecord::Utility.convert_keys(args.first)
+            expression = expression_hash.map { |key, value| "#{key} = #{BlocRecord::Utility.sql_strings(value)}"}.join("<>")
+          end
+        end
+
+        sql = <<-SQL
+          SELECT #{columns.join ","} FROM #{table}
+          WHERE #{expression};
+        SQL
+
+        rows = connection.execute(sql, params)
+        rows_to_array(rows)
+      end
+    end
   end
 end

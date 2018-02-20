@@ -4,9 +4,9 @@ module Selection
 
   def find(*ids)
     ids.each do |id|
-        unless id.is_a? Integer && id > 0
-            raise ArgumentError.new('ID must be a postive integer')
-        end
+      unless id.is_a? Integer && id > 0
+          raise ArgumentError.new('ID must be a postive integer')
+      end
     end
     if ids.length == 1
       find_one(ids.first)
