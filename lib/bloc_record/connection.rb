@@ -1,14 +1,15 @@
 require 'sqlite3'
 
 module Connection
+
   def connection
-    if @connection.nil?
-      the_filename = BlocRecord.database_filename
-      the_connection = SQLite3::Database.new(the_filename)
-
-      @connection = the_connection
+    case BlocRecord.db_type
+    when :sqlite
+      @connection ||= SQLite3::Database.new(BlocRecord.database_filename)
+    when :pg
+      @connection ||= PG::Connection.open(dbname: BlocRecord.database_filename)
+    else
+      raise ArgumentError "That is not a supported database type."
     end
-
-    return @connection
   end
 end
